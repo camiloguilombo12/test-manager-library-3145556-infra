@@ -1,0 +1,9 @@
+# Entorno: el .env real nunca se versiona (artículo IX)
+.env
+
+# Archivos del sistema y del editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
