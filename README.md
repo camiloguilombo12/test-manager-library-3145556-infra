@@ -51,7 +51,12 @@ No hay prórroga: suban avances parciales con commits pequeños durante la prueb
 
 ## Cómo levantar el entorno
 
-Requisito: Docker con Docker Compose.
+Requisito: Docker con Docker Compose, y este repositorio clonado junto al de la API:
+
+```text
+test-manager-library-3145556-infra/
+test-manager-library-3145556-api/
+```
 
 1. Copiar el archivo de entorno y completar los valores vacíos:
 
@@ -74,6 +79,9 @@ Requisito: Docker con Docker Compose.
 | Servicio | Qué es | Puerto |
 |---|---|---|
 | `db` | PostgreSQL 16 vacío, en UTC, con volumen `db-data` | `127.0.0.1:${DB_PORT}` (5432 por defecto) |
+| `api` | API Laravel; al arrancar aplica las migraciones. Portadas en el volumen `covers` | `127.0.0.1:${API_PORT}` (8000 por defecto) |
+
+La API responde en `http://localhost:8000/api/v1/health`.
 
 Este repositorio no contiene `CREATE TABLE` ni scripts de inicio de la base: el esquema `library`, las tablas, las restricciones y la
 semilla de categorías los crean las migraciones de la API (constitución, artículo V; ADR-001).
