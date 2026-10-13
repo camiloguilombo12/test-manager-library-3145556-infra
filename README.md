@@ -48,3 +48,34 @@ No hay prórroga: suban avances parciales con commits pequeños durante la prueb
 | [`test-manager-library-3145556-page`](https://github.com/code-sena/test-manager-library-3145556-page) | Sitio público estático de presentación |
 | [`test-manager-library-3145556-infra`](https://github.com/code-sena/test-manager-library-3145556-infra) | Contenedores, red, volúmenes y motor de base de datos vacío |
 | [`test-manager-library-3145556-tool`](https://github.com/code-sena/test-manager-library-3145556-tool) | Utilidades: sembrador de datos de demostración |
+
+## Cómo levantar el entorno
+
+Requisito: Docker con Docker Compose.
+
+1. Copiar el archivo de entorno y completar los valores vacíos:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Levantar los servicios:
+
+   ```bash
+   docker compose up -d
+   ```
+
+3. Comprobar que la base arranca vacía (no debe listar ninguna tabla):
+
+   ```bash
+   docker compose exec db psql -U library -d library -c "\dt library.*"
+   ```
+
+| Servicio | Qué es | Puerto |
+|---|---|---|
+| `db` | PostgreSQL 16 vacío, en UTC, con volumen `db-data` | `127.0.0.1:${DB_PORT}` (5432 por defecto) |
+
+Este repositorio no contiene `CREATE TABLE` ni scripts de inicio de la base: el esquema `library`, las tablas, las restricciones y la
+semilla de categorías los crean las migraciones de la API (constitución, artículo V; ADR-001).
+
+Para borrar la base y empezar de cero: `docker compose down -v`.
